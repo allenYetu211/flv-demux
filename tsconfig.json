@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+      "downlevelIteration": true,
+      "target": "es5",
+      "module": "es6",
+      "sourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "noImplicitAny": false,
+      "experimentalDecorators": true,
+      "preserveConstEnums": true,
+      "outDir": "lib",
+      "declaration": true,
+      "moduleResolution": "node",
+      "jsx": "preserve",
+      "lib": [
+          "es2015.promise",
+          "es5",
+          "dom"
+      ],
+      "baseUrl": ".",
+      "paths": {
+        "@": ["./src"],
+        "@/*": ["./src/*"]
+      }
+  },
+  "exclude": [
+      "node_modules",
+      "lib",
+      "output"
+  ],
+  "include": [
+      "src/**/*",
+      "demo/**/*"
+  ]
+}
