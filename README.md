@@ -1,14 +1,16 @@
 <!--
  * @Date: 2022-04-13 17:10:11
- * @LastEditTime: 2022-04-24 16:49:41
+ * @LastEditTime: 2022-04-24 17:00:48
 -->
-### FLV 
+
+# FLV-DEMUX
+
 > FLV :  JS 解封装
 
 
 ### 使用
 
-安装依赖： ** yarn install **
+安装依赖： **yarn install**
 
 启动： **yarn dev**
 
@@ -28,4 +30,3 @@
 
 
 
-# flv-demux
