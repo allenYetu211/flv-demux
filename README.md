@@ -1,6 +1,6 @@
 <!--
  * @Date: 2022-04-13 17:10:11
- * @LastEditTime: 2022-04-24 17:00:48
+ * @LastEditTime: 2022-04-24 17:03:09
 -->
 
 # FLV-DEMUX
@@ -18,14 +18,6 @@
 
 编译： **yarn build**
 
-
-### 开发配置
-
-端口修改：
-
-文件：**rollup.config.js**
-
-- port: 3000
 
 
 

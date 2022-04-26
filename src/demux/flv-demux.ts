@@ -1,8 +1,8 @@
 /*
  * @Date: 2022-04-13 18:48:19
- * @LastEditTime: 2022-04-24 16:43:35
+ * @LastEditTime: 2022-04-26 14:26:39
  */
-import { FLVTag } from '@/demux/parse-tag';
+import { FLVTag } from '@/parse/flv-tag';
 import PST from '@/parse/script-tag';
 import PAT from '@/parse/audio-tag';
 import PVT from '@/parse/video-tag';
@@ -15,6 +15,8 @@ export class FLVdemux {
     index: number = 0;  // 当前操作buffer位置
     scriptTagInfo;  // 当前操作buffer位置
     tags: any[] = [];
+
+    tempFlag = true
 
     constructor (buffer) {
         this.arrayBuffer = buffer;
@@ -60,11 +62,11 @@ export class FLVdemux {
     }
 
 
-      /**
-     * 截取Flv中Tag的信息
-     * @returns 
-     */
-       parseFlvTagData() {
+    /**
+   * 截取Flv中Tag的信息
+   * @returns 
+   */
+    parseFlvTagData() {
         const tag = new FLVTag();
         // 当剩余数据量满足与一个基本的tag头部信息时，则进行解析。
         if (this.unreadLength > 11) {
@@ -108,21 +110,31 @@ export class FLVdemux {
      * 解析flv中video audio tags
      */
     parseFlvVideoAudioTag() {
-        //  将所有的tag进行拆分
-        while (this.index < this.u8b.length) {
-            const tag = this.parseFlvTagData();
-           
-            if (tag.TagType === 9) {
-                PVT.parseVideoTagData(tag.body, 0, tag.DataSize);
+        return new Promise((resolve, reject) => {
+            try {
+                //  将所有的tag进行拆分
+                while (this.index < this.u8b.length) {
+                    const tag = this.parseFlvTagData();
+
+                    if (tag.TagType === 9) {
+                        this.tags.push(PVT.parseVideoTagData(tag))
+                        // PVT.parseVideoTagData(tag.body, 0, tag.DataSize);
+                    }
+                    // 音频tag
+                    if (tag.TagType === 8) {
+                        this.tags.push(PAT.parseAudioTagData(tag));
+                    }
+                }
+
+                resolve(this.tags);
+            } catch (e) { 
+                reject(e)
             }
-            // 音频tag
-            if (tag.TagType === 8) {
-                PAT.parseAudioTagData(tag.body, 0, tag.DataSize);
-            }
-        }
-        // this.parseVideoAudio();
+
+        })
+
     }
-    
+
     /**
      * 获取buffer对应数据内容，并移动读取位置
      * @param length 

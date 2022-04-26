@@ -1,6 +1,6 @@
 /*
  * @Date: 2022-04-14 11:33:07
- * @LastEditTime: 2022-04-16 15:08:03
+ * @LastEditTime: 2022-04-26 15:09:57
  */
 
 
@@ -16,6 +16,20 @@ export class FLVTag {
     tagSize: Uint8Array;
     StreamID: number = 0;
     Data: number = 0;
+    Video?: {
+        FrameType: string;
+        CodecID: string;
+        AVCPacketType: string;
+        CompositionTime: number | string;
+    } 
+    Audio?: {
+        SoundFormat: string
+        SoundRate: string
+        SoundSize: string
+        SoundType: string
+        // SoundData
+      }
+    
 
     // 转换时间戳显示
     static getTimestamp(array) {

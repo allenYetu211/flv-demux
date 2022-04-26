@@ -22,12 +22,10 @@ class PST {
         try {
             const name = this.parseMetaValue(buffer, bufferOffset, bufferSize);
             const value = this.parseMetaValue(buffer, bufferOffset + name.size, bufferSize - name.size);
-            console.log('value', value);
             data[name.data] = value.data;
         } catch (e) {
             throw e;
         }
-        console.log('data', data);
         return data;
     }
 

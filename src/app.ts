@@ -1,9 +1,9 @@
 /*
  * @Date: 2022-04-13 17:10:11
- * @LastEditTime: 2022-04-24 16:02:29
+ * @LastEditTime: 2022-04-26 15:14:45
  */
 import { loadFetch } from './http/fetch';
-import { FLVdemux } from './demux/parse';
+import { FLVdemux } from './demux/flv-demux';
 
 class FlvDemux {
     TAG: string = '';
@@ -18,10 +18,15 @@ class FlvDemux {
     public async load(url) {
         const result = await loadFetch(url);
         this.FLVdemux = new FLVdemux(result);
-        const flvHead = this.FLVdemux.parseFlvHeader();
-        const flvScriptTag = this.FLVdemux.parseFlvFirstTag();
-        const flvBodyTag = this.FLVdemux.parseFlvVideoAudioTag();
-        console.log('flvScriptTag', flvScriptTag);
+        const flvHead = await this.FLVdemux.parseFlvHeader();
+        const flvScriptTag = await this.FLVdemux.parseFlvFirstTag();
+        const flvBodyTag = await this.FLVdemux.parseFlvVideoAudioTag();
+
+        return  {
+            flvHead,
+            flvScriptTag,
+            flvVideoAudioTag: flvBodyTag
+        }
     }
 }
 
